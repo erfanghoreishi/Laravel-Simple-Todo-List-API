@@ -166,6 +166,8 @@ return [
 
         //Laratrust
         Laratrust\LaratrustServiceProvider::class,
+        //nexmo sms client
+        Nexmo\Laravel\NexmoServiceProvider::class,
 
 
         /*
@@ -176,6 +178,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
 
     ],
 
@@ -226,7 +229,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         //Laratrust
-        'Laratrust'   => Laratrust\LaratrustFacade::class,
+        'Laratrust' => Laratrust\LaratrustFacade::class,
+
+        //nexmo sms client
+        'Nexmo' => Nexmo\Laravel\Facade\Nexmo::class,
+
 
 
     ],

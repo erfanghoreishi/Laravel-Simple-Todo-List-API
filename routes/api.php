@@ -13,6 +13,27 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware(['auth:api', 'verified'])->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware(['auth:api', 'verified'])->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+
+//
+
+//public emailVerification
+Route::get('email/verify/{id}', 'api\Auth\VerificationController@verify')->name('verification.verify');
+Route::get('email/resend', 'api\Auth\VerificationController@resend')->name('verification.resend');
+//------------------------
+
+
+//login
+//$this->post('login', 'Auth\LoginController@login');
+//$this->post('logout', 'Auth\LoginController@logout')->name('logout');
+
+
+//register
+Route::post('Auth/register', 'api\Auth\RegisterController@register');
