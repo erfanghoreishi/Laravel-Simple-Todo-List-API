@@ -13,9 +13,19 @@ class CreateTodosTable extends Migration
      */
     public function up()
     {
+
+        //todo add constraint to value of status  NEW DON CAN for new done and canceled
+
         Schema::create('todos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->string('description');
+            $table->string('status')->default('NEW');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
+
+
         });
     }
 
@@ -27,5 +37,6 @@ class CreateTodosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('todos');
+
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Resources\UserResource;
 
 class RegisterController extends Controller
 {
@@ -65,7 +65,7 @@ class RegisterController extends Controller
      * Handle a registration request for the application.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Http\Resources\UserResource
      */
     public function register(Request $request)
     {
@@ -79,7 +79,7 @@ class RegisterController extends Controller
 
 
 
-        return response()->json(["data" => array('user' => $user)], 200);
+        return new UserResource($user);
 
     }
 

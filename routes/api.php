@@ -17,23 +17,17 @@ Route::middleware(['auth:api', 'verified'])->get('/user', function (Request $req
     return $request->user();
 });
 
-Route::middleware(['auth:api', 'verified'])->get('/user', function (Request $request) {
-    return $request->user();
-});
+//register
+Route::post('Auth/register', 'api\Auth\RegisterController@register');
 
-
-//
-
-//public emailVerification
+//email Verification
 Route::get('email/verify/{id}', 'api\Auth\VerificationController@verify')->name('verification.verify');
 Route::get('email/resend', 'api\Auth\VerificationController@resend')->name('verification.resend');
 //------------------------
 
+//todoes
+Route::apiResource('todos', 'api\TodoController')->middleware(['auth:api', 'verified']);
 
-//login
-//$this->post('login', 'Auth\LoginController@login');
-//$this->post('logout', 'Auth\LoginController@logout')->name('logout');
-
-
-//register
-Route::post('Auth/register', 'api\Auth\RegisterController@register');
+//task
+Route::apiResource('tasks', 'api\TaskController')->middleware(['auth:api', 'verified'])->except(['store']);
+Route::post('/todos/{todo}/tasks', 'api\TaskController@store')->middleware(['auth:api', 'verified'])->name('tasks.store');

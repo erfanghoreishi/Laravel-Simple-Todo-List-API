@@ -13,16 +13,17 @@ class SendSMSVerificationNotification implements ShouldQueue
 
     /**
      * Handle the event.
-     *
+     *send sms notification to user using nexmo sms api
      * @param  object $event
      * @return void
      */
     public function handle(Registered $event)
     {
+        if (env('NEXMO')) {
 
-        $user = $event->user;
-        //send sms notification to user using nexmo sms api
-        // Notification::send($user, new UserRegisteredNotification($user));
+            $user = $event->user;
+            Notification::send($user, new UserRegisteredNotification($user));
+        }
 
 
     }

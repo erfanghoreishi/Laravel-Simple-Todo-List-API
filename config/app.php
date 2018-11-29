@@ -169,6 +169,10 @@ return [
         //nexmo sms client
         Nexmo\Laravel\NexmoServiceProvider::class,
 
+        //Eloquent Builder filter
+        Fouladgar\EloquentBuilder\ServiceProvider::class,
+
+
 
         /*
          * Application Service Providers...
@@ -230,9 +234,11 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         //Laratrust
         'Laratrust' => Laratrust\LaratrustFacade::class,
-
         //nexmo sms client
         'Nexmo' => Nexmo\Laravel\Facade\Nexmo::class,
+        //Eloquent Builder filter
+        "EloquentBuilder" => Fouladgar\EloquentBuilder\Facade::class,
+
 
 
 

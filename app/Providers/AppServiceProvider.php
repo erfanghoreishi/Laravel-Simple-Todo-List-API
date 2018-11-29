@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Observers\TaskObserver;
+use App\Observers\TodoObserver;
 use App\Observers\UserObserver;
+use App\Task;
+use App\Todo;
 use App\User;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         User::observe(UserObserver::class);
+        Todo::observe(TodoObserver::class);
+        Task::observe(TaskObserver::class);
 
     }
 

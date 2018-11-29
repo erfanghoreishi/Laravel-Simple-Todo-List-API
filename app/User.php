@@ -38,4 +38,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->phone;
     }
+
+    //has many todos
+    public function todos()
+    {
+        return $this->hasMany(Todo::class, 'user_id', 'id');
+    }
+
+    //has many tasks
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'user_id', 'id');
+    }
+
 }
