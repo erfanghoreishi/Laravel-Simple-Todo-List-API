@@ -17,11 +17,27 @@ class TaskController extends Controller
      *
      * @return TaskResource
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $tasks = auth()->user()->tasks;
-        return new TaskResource($tasks);
+
+
+
+        $tasks = auth()->user()->tasks()->with('todo');
+
+
+        //todo remember to use EloquentBuilder
+        //todo validate status and title filters
+        if (request()->has('filter_by_status')) {
+            $tasks->where('status', request('filter_by_status'));
+
+        }
+        if (request()->has('filter_by_title')) {
+            $tasks->where('title', request('filter_by_title'));
+        }
+
+        return new TaskResource($tasks->get());
+
     }
 
     /**

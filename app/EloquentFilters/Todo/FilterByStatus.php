@@ -1,6 +1,7 @@
 <?php
 
-namespace Fouladgar\EloquentBuilder\Tests\EloquentFilters\User;
+namespace App\EloquentFilters\Todo;
+
 
 use Fouladgar\EloquentBuilder\Support\Foundation\Contracts\IFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,6 +18,6 @@ class FilterByStatus implements IFilter
      */
     public function apply(Builder $builder, $value): Builder
     {
-        return $builder->where('id',1);
+        return $builder->where('',1);
     }
 }

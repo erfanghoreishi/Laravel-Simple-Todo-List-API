@@ -20,13 +20,24 @@ class TodoController extends Controller
      *
      * @return TodoResrouce
      */
-    public function index()
+    public function index(Request $request)
     {
-        //todo remember to use EloquentBuilder
-        // return $users = EloquentBuilder::to(Todo::class, $request->all());
 
-        $todos = auth()->user()->todos()->with('tasks')->get();
-        return new TodoResrouce($todos);
+        //todo validate status and title filters
+        //todo remember to use EloquentBuilder
+
+        $todos = auth()->user()->todos()->with('tasks');
+
+
+        if (request()->has('filter_by_status')) {
+            $todos->where('status', request('filter_by_status'));
+
+        }
+        if (request()->has('filter_by_title')) {
+            $todos->where('title', request('filter_by_title'));
+        }
+
+        return new TodoResrouce($todos->get());
     }
 
     /**
@@ -65,12 +76,12 @@ class TodoController extends Controller
     public function show(Todo $todo)
     {
 
-    /*    if ($todo->user_id!=auth()->id()){
-        throw new AuthenticationException('Unauthenticated.');
+        /*    if ($todo->user_id!=auth()->id()){
+            throw new AuthenticationException('Unauthenticated.');
 
 
-    }*/
-        $this->authorize('view',$todo);
+        }*/
+        $this->authorize('view', $todo);
 
 
         $todo = Todo::with('tasks')->findOrFail($todo);
