@@ -20,6 +20,5 @@ Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/todoes', 'HomeController@index')->name('home')->middleware('verified');
 
 
