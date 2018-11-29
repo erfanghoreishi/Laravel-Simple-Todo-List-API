@@ -29,7 +29,7 @@ Route::middleware(['auth:api', 'verified'])->group(function () {
 
     //sms verification
     Route::get('sms/verify/{code}', 'api\Auth\SMSVerificationController@verify')->name('sms.verification.verify')->middleware('throttle:6,1');
-    Route::get('sms/resend', 'api\Auth\SMSVerificationController@resend')->name('sms.verification.resend')->middleware('throttle:6,1');
+    Route::get('sms/resend', 'api\Auth\SMSVerificationController@resend')->name('sms.verification.resend')->middleware('throttle:32,1');
 
 
     //todoes

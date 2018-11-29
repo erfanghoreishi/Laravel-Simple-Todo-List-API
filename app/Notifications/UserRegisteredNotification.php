@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\NexmoMessage;
 
-class UserRegisteredNotification extends Notification
+class UserRegisteredNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -46,7 +46,7 @@ class UserRegisteredNotification extends Notification
     public function toNexmo($notifiable)
     {
         return (new NexmoMessage)
-            ->content('your verification code is: '+$this->user->sms_code);
+            ->content("your verification code is: ".$this->user->sms_code);
     }
 
     /**

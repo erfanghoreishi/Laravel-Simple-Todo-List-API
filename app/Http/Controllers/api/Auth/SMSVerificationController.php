@@ -50,9 +50,11 @@ class SMSVerificationController extends Controller
         $user->sms_code = rand(0, 99999);
         $user->save();
 
-        Notification::send($user, new UserRegisteredNotification($user));
-
-        return response()->json(["data" => array('message' => "notification is sent")]);
+        if (env('NEXMO')) {
+            Notification::send($user, new UserRegisteredNotification($user));
+        }
+        $result = env('NEXMO') ? "notification is send" : "set  NEXMO in env file";
+        return response()->json(["data" => array('message' => $result)]);
 
     }
 }
