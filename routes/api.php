@@ -18,18 +18,15 @@ Route::middleware(['auth:api', 'verified'])->get('/user', function (Request $req
 });
 
 //register
-Route::post('Auth/register', 'api\Auth\RegisterController@register');
+Route::post('Auth/register', 'api\Auth\RegisterController@register')->name('register');
 
-//email Verification
-Route::get('email/verify/{id}', 'api\Auth\VerificationController@verify')->name('verification.verify');
-//------------------------
 
 
 Route::middleware(['auth:api', 'verified'])->group(function () {
 
     //sms verification
-    Route::get('sms/verify/{code}', 'api\Auth\SMSVerificationController@verify')->name('sms.verification.verify')->middleware('throttle:6,1');
-    Route::get('sms/resend', 'api\Auth\SMSVerificationController@resend')->name('sms.verification.resend')->middleware('throttle:32,1');
+    Route::get('sms/verify/{code}', 'api\Auth\SMSVerificationController@verify')->middleware('throttle:6,1')->name('sms.verification.verify');
+    Route::get('sms/resend', 'api\Auth\SMSVerificationController@resend')->middleware('throttle:32,1')->name('sms.verification.resend');
 
 
     //todoes

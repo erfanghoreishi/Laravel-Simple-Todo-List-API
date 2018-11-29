@@ -40,7 +40,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6'],
-            'phone' => ['required', 'string'],
+            'phone' => ['required', 'string','unique:users','digits:11'],
         ]);
     }
 
@@ -75,9 +75,6 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        //  $this->guard()->login($user);
-
-
 
         return new UserResource($user);
 
@@ -90,6 +87,6 @@ class RegisterController extends Controller
      */
     protected function guard()
     {
-        return Auth::guard('api');
+        return Auth::guard();
     }
 }
