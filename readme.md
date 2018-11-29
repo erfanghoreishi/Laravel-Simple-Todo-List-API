@@ -14,84 +14,59 @@ This is  token based authentication api built with laravel 5.7
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
+ 1-  install dependencies using **composer update**
+2-   make .env file set NEXMO credentials if you want sms verification
+3- **php artisan serve**
+4- php artisan migrate
 End with an example of getting some data out of the system or using it for a little demo
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+### API Routes
 ```
-Give an example
+params=
+Route::middleware(['auth:api', 'verified'])->get('/user', function (Request $request) {  
+  return $request->user();  
+});  
+  
+//register  
+Route::post('Auth/register', 'api\Auth\RegisterController@register')->name('register');  
+  
+  
+  
+Route::middleware(['auth:api', 'verified'])->group(function () {  
+  
+  //sms verification  
+  Route::get('sms/verify/{code}', 'api\Auth\SMSVerificationController@verify')->middleware('throttle:6,1')->name('sms.verification.verify');  
+  Route::get('sms/resend', 'api\Auth\SMSVerificationController@resend')->middleware('throttle:32,1')->name('sms.verification.resend');  
+  
+  
+  //todoes  
+  Route::apiResource('todos', 'api\TodoController');  
+  
+  //task  
+  Route::apiResource('tasks', 'api\TaskController')->except(['store']);  
+  Route::post('/todos/{todo}/tasks', 'api\TaskController@store')->middleware(['auth:api', 'verified'])->name('tasks.store');  
+  
+  
+});  
+  
+  
+//admin  
+Route::get('/users', 'api\AdminController@index')->name('users.index')->middleware(['auth:admin']);  
+Route::post('/users/{user}', 'api\AdminController@verify')->name('users.verify')->middleware(['auth:admin']);
 ```
 
-### And coding style tests
+## Author
 
-Explain what these tests test and why
+* **Erfan Ghoreishi** 
 
-```
-Give an example
-```
 
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License 
 
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
