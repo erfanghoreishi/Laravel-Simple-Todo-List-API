@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Resources\TaskResource;
 use App\Task;
 use App\Todo;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -20,7 +21,6 @@ class TaskController extends Controller
     {
         //
         $tasks = auth()->user()->tasks;
-
         return new TaskResource($tasks);
     }
 
@@ -52,6 +52,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        $this->authorize('view', $task);
 
         $task = Task::with('todo')->findOrFail($task);
         return new TaskResource($task);

@@ -53,11 +53,6 @@ class VerificationController extends Controller
      */
     public function verify(Request $request)
     {
-
-        exit();
-
-        return '1234';
-
         if ($request->route('id') != $request->user()->getKey()) {
             throw new AuthorizationException;
         }

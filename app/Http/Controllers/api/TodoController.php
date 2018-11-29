@@ -6,6 +6,7 @@ use App\Http\Resources\TodoResrouce;
 use App\Http\Resources\UserResource;
 use App\Todo;
 use App\User;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use EloquentBuilder;
@@ -61,8 +62,17 @@ class TodoController extends Controller
      * @param  \App\Todo $todo
      * @return UserResource
      */
-    public function show($todo)
+    public function show(Todo $todo)
     {
+
+    /*    if ($todo->user_id!=auth()->id()){
+        throw new AuthenticationException('Unauthenticated.');
+
+
+    }*/
+        $this->authorize('view',$todo);
+
+
         $todo = Todo::with('tasks')->findOrFail($todo);
         return new TodoResrouce($todo);
     }
@@ -79,11 +89,10 @@ class TodoController extends Controller
 
         request()->validate(['status' => [
             'required',
-            Rule::in(['CAN']),
-        ],
-        ]);
+            Rule::in(['CAN']),],]);
 
         $method = null;
+
         if (request('status') == 'CAN') {
             $todo->canceled();
             $method = 'canceled';
