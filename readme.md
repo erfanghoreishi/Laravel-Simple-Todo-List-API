@@ -24,7 +24,7 @@ This is  token based authentication api built with laravel 5.7
 3- **php artisan serve**
 4- php artisan migrate
 End with an example of getting some data out of the system or using it for a little demo
-
+5-set MAIL_DRIVER=log to see verification email
 ### API Routes
 ```
 params=
