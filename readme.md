@@ -19,7 +19,7 @@ This is  token based authentication api built with laravel 5.7
 ### Installing
 
 
- 1-  install dependencies using **composer update**
+1-  install dependencies using **composer update**
 2-   make .env file set NEXMO credentials if you want sms verification
 3- **php artisan serve**
 4- php artisan migrate
