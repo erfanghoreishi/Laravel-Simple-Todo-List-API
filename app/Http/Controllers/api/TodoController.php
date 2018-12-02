@@ -23,7 +23,7 @@ class TodoController extends Controller
     public function index(Request $request)
     {
 
-        //todo validate status and title filters
+     /*   //todo validate status and title filters
         //todo remember to use EloquentBuilder
 
         $todos = auth()->user()->todos()->with('tasks');
@@ -35,7 +35,14 @@ class TodoController extends Controller
         }
         if (request()->has('filter_by_title')) {
             $todos->where('title', request('filter_by_title'));
-        }
+        }*/
+
+
+        $todos = EloquentBuilder::to(
+            Todo::class,
+            $request->all()
+        );
+
 
         return new TodoResrouce($todos->get());
     }

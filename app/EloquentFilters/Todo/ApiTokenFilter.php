@@ -3,21 +3,21 @@
 namespace App\EloquentFilters\Todo;
 
 
-use Fouladgar\EloquentBuilder\Support\Foundation\Contracts\IFilter;
+use Fouladgar\EloquentBuilder\Support\Foundation\Contracts\IFilter as Filter;
 use Illuminate\Database\Eloquent\Builder;
 
-class FilterByStatus implements IFilter
+class ApiTokenFilter implements Filter
 {
     /**
      * Undocumented function.
      *
      * @param Builder $builder
-     * @param mixed   $value
+     * @param mixed $value
      *
      * @return Builder
      */
     public function apply(Builder $builder, $value): Builder
     {
-        return $builder->where('',1);
+        return $builder;
     }
 }
