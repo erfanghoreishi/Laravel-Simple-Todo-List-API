@@ -23,25 +23,19 @@ class TodoController extends Controller
     public function index(Request $request)
     {
 
-     /*   //todo validate status and title filters
-        //todo remember to use EloquentBuilder
-
-        $todos = auth()->user()->todos()->with('tasks');
-
-
-        if (request()->has('filter_by_status')) {
-            $todos->where('status', request('filter_by_status'));
-
-        }
-        if (request()->has('filter_by_title')) {
-            $todos->where('title', request('filter_by_title'));
-        }*/
+        //todo validate status and title filters
 
 
         $todos = EloquentBuilder::to(
             Todo::class,
             $request->all()
         );
+
+        /*
+         * show current user todos
+         *  return  $todos->with(['tasks','user'])->whereHas('user',function ($query){
+             $query->where('api_token','b3b2268cda6e1e5a2f40e529253cc645a5181e253bace78cfdf9fe587891');
+         })->get();*/
 
 
         return new TodoResrouce($todos->get());

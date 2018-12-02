@@ -6,7 +6,7 @@ namespace App\EloquentFilters\Todo;
 use Fouladgar\EloquentBuilder\Support\Foundation\Contracts\IFilter as Filter;
 use Illuminate\Database\Eloquent\Builder;
 
-class ApiTokenFilter implements Filter
+class TitleFilter implements Filter
 {
     /**
      * Undocumented function.
@@ -18,10 +18,6 @@ class ApiTokenFilter implements Filter
      */
     public function apply(Builder $builder, $value): Builder
     {
-
-        return $builder->with(['tasks', 'user'])->whereHas('user', function ($query) use($value) {
-            $query->where('api_token', $value);
-        });
-
+        return $builder->where('title', $value);
     }
 }

@@ -20,10 +20,16 @@ class Todo extends Model
         return $this->hasMany(Task::class, 'todo_id', 'id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+
     public function addTask($task)
     {
 
-       // return $this->user_id;
+        // return $this->user_id;
 
         return $this->tasks()->create([
             'status' => $this->status,
